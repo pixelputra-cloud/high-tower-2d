@@ -77,13 +77,13 @@ export function ResultsOverlay(p: Props) {
           <Stat label="Best Score">{p.bestScore}</Stat>
         </div>
         <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
-          <button className="btn btn--secondary" onClick={p.onReview}>
+          <button className="btn btn--info" onClick={p.onReview}>
             Review Answers
           </button>
           <button className="btn" onClick={p.onPlayAgain}>
             Play Again
           </button>
-          <button className="btn btn--secondary" onClick={p.onMenu}>
+          <button className="btn btn--alt" onClick={p.onMenu}>
             Menu
           </button>
         </div>

@@ -78,7 +78,14 @@ export const TOWER_W = 292;
 export const FLOOR_H = 119;
 export const TOP_FLOOR_H = 101;
 export const GROUND_Y = 600;
-export const CAMERA_LOCK_Y = 60;
+/**
+ * Where the roof's top edge parks once the camera locks. The PRD said 60, but the
+ * question row sits at y 14–95, so a roof pinned at 60 tucks its crenellations and
+ * purple peak behind those blocks. Deriving it from the question row instead keeps
+ * the whole roof clear of them, and stays correct if that row ever moves.
+ */
+export const TOWER_HEADROOM = 8;
+export const CAMERA_LOCK_Y = ANSWER_SLOT.y + ANSWER_SLOT.h + TOWER_HEADROOM;
 
 // Floor label mini-blocks, offsets from the stack's top-left — ref measurements.
 export const MINI_LEFT: Rect = { x: 37, y: 42, w: 73, h: 66 };

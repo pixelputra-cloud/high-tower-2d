@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FLOOR_H } from './constants';
+import { ANSWER_SLOT, CAMERA_LOCK_Y, FLOOR_H, GROUND_Y, TOP_FLOOR_H } from './constants';
 import { STREAK_MESSAGES } from './encouragement';
 import { cameraOffsetFor, createInitialState, floorY, gameReducer, points, towerTopY, type GameAction } from './gameMachine';
 import type { GameState, Symbol } from './types';
@@ -88,11 +88,17 @@ describe('tower', () => {
     expect(s.phase).toBe('playing');
   });
 
-  it('A12: camera locks once the roof would go above y = 60', () => {
-    expect(cameraOffsetFor(3)).toBe(0); // top at 142
+  it('A12: camera locks once the roof would rise past the question row', () => {
+    expect(cameraOffsetFor(3)).toBe(0); // top at 142, still below the lock line
     expect(towerTopY(4)).toBe(23);
-    expect(cameraOffsetFor(4)).toBe(37);
+    expect(cameraOffsetFor(4)).toBe(CAMERA_LOCK_Y - 23);
     expect(cameraOffsetFor(10) - cameraOffsetFor(9)).toBe(FLOOR_H);
+  });
+
+  it('the parked roof clears the question blocks, so it is never hidden behind them', () => {
+    expect(CAMERA_LOCK_Y).toBeGreaterThanOrEqual(ANSWER_SLOT.y + ANSWER_SLOT.h);
+    // ...and the whole roof, not just its top edge, stays on stage.
+    expect(CAMERA_LOCK_Y + TOP_FLOOR_H).toBeLessThan(GROUND_Y);
   });
 });
 

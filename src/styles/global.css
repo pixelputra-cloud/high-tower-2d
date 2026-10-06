@@ -154,15 +154,26 @@ body {
   box-shadow: 0 1px 0 rgba(150, 105, 0, 0.55);
 }
 
-/* Quieter sibling: same flat shape, lifted off the panel instead of coloured. */
-.btn--secondary {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 5px 0 rgba(0, 6, 60, 0.4);
+/* Review Answers — the question block's blue, so it reads as "look at the questions". */
+.btn--info {
+  color: #06205c;
+  background: #2db2ff;
+  box-shadow: 0 5px 0 #166d9e;
 }
 
-.btn--secondary:active {
-  box-shadow: 0 1px 0 rgba(0, 6, 60, 0.4);
+.btn--info:active {
+  box-shadow: 0 1px 0 #166d9e;
+}
+
+/* Menu — the tower stack's purple, clearly distinct from the other two. */
+.btn--alt {
+  color: #fff;
+  background: #c33cf0;
+  box-shadow: 0 5px 0 #71068f;
+}
+
+.btn--alt:active {
+  box-shadow: 0 1px 0 #71068f;
 }
 
 .backdrop {
