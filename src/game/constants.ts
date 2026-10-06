@@ -30,13 +30,23 @@ export const QUESTION_FONT = 34;
 export const QUESTION_FONT_3DIGIT = 28;
 export const DROP_TOLERANCE = 20;
 
-// §6.2 Answer panel — the three blocks are centred both ways on the panel, leaving
-// (348 − 3×81 − 2×8) / 2 = 44px of breathing room above and below.
-export const UI_PANEL: Rect = { x: 0, y: 152, w: 118, h: 348 };
-export const PALETTE_X = (118 - BLOCK_W) / 2;
+// §6.2 Answer panel — the panel is sized from the stack it holds rather than fixed:
+// three blocks plus an even PANEL_PAD margin on every side. That keeps the art at the
+// same 78% scale as the blocks (118×348 → 92×271) and the same 8px padding the
+// source composite used, scaled down. The art is flat on its left edge, so x = 0
+// lets it bleed off-stage exactly as the reference does.
 export const PALETTE_GAP = 8;
-const PALETTE_TOP = UI_PANEL.y + (UI_PANEL.h - (3 * BLOCK_H + 2 * PALETTE_GAP)) / 2;
+export const PANEL_PAD = 6;
 const PALETTE_STEP = BLOCK_H + PALETTE_GAP;
+const PALETTE_STACK_H = 3 * BLOCK_H + 2 * PALETTE_GAP;
+export const UI_PANEL: Rect = {
+  x: 0,
+  y: 191,
+  w: BLOCK_W + 2 * PANEL_PAD,
+  h: PALETTE_STACK_H + 2 * PANEL_PAD,
+};
+export const PALETTE_X = UI_PANEL.x + PANEL_PAD;
+const PALETTE_TOP = UI_PANEL.y + PANEL_PAD;
 export const PALETTE_Y = {
   '<': PALETTE_TOP,
   '=': PALETTE_TOP + PALETTE_STEP,
@@ -45,8 +55,9 @@ export const PALETTE_Y = {
 export const PALETTE_ORDER = ['<', '=', '>'] as const;
 export const SYMBOL_FONT = 40;
 
-// §6.3 Timer
-export const TIMER_RECT: Rect = { x: 8, y: 10, w: 102, h: 56 };
+// §6.3 Timer — same width and left edge as the answer panel below it, so the two
+// line up as one column, and styled like the other panels (no border).
+export const TIMER_RECT: Rect = { x: UI_PANEL.x, y: 10, w: UI_PANEL.w, h: 52 };
 export const TIMER_WARNING_MS = 10_000;
 
 // §6.4 Score panel — cards stack upward from the foot of the panel, the way floors
@@ -132,8 +143,5 @@ export const CREDIT_LINE = 'TODO: Vidhu to supply final credit text';
 // Sampled from the art so the DOM-drawn panels and buttons match the PNGs.
 export const NAVY = '#1a237e';
 export const YELLOW = '#ffd600';
-/** `UI Panel.png` / `Score panel.png` fill. */
+/** `UI Panel.png` / `Score panel.png` fill. The button yellow lives in global.css. */
 export const PANEL_NAVY_RGB = '0, 15, 125';
-/** `User_Input Button_Main.png` face and its darker top band. */
-export const BUTTON_YELLOW = '#ffdf00';
-export const BUTTON_AMBER = '#f0b100';

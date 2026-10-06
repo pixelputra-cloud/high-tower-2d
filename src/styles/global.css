@@ -4,7 +4,6 @@
   /* Sampled from the PNG art so DOM panels and buttons match it. */
   --panel-navy: 0, 15, 125;
   --btn-yellow: #ffdf00;
-  --btn-amber: #f0b100;
   --page-bg: #0b0f3a;
   --font: 'Fredoka', 'Baloo 2', system-ui, sans-serif;
 }
@@ -128,17 +127,16 @@ body {
   box-shadow: 0 10px 30px rgba(0, 6, 60, 0.45);
 }
 
-/* Shaped like User_Input Button_Main.png: flat yellow face, darker amber band
-   along the top, soft rounded corners, no outline. */
+/* Flat yellow face from User_Input Button_Main.png — no outline, no top band. */
 .btn {
   font-family: var(--font);
   font-weight: 700;
   font-size: 16px;
   white-space: nowrap;
   color: #1b1b00;
-  background: linear-gradient(var(--btn-amber) 0 7px, var(--btn-yellow) 7px);
+  background: var(--btn-yellow);
   border: 0;
-  border-radius: 18px;
+  border-radius: 11px;
   padding: 0 16px;
   height: 46px;
   cursor: pointer;
@@ -156,10 +154,10 @@ body {
   box-shadow: 0 1px 0 rgba(150, 105, 0, 0.55);
 }
 
-/* Quieter sibling: the score panel's lavender, same shape and no outline. */
+/* Quieter sibling: same flat shape, lifted off the panel instead of coloured. */
 .btn--secondary {
   color: #fff;
-  background: linear-gradient(rgba(255, 255, 255, 0.22) 0 7px, rgba(255, 255, 255, 0.13) 7px);
+  background: rgba(255, 255, 255, 0.16);
   box-shadow: 0 5px 0 rgba(0, 6, 60, 0.4);
 }
 
