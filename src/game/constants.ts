@@ -14,34 +14,48 @@ export interface Rect {
   h: number;
 }
 
-export const BLOCK_W = 102;
-export const BLOCK_H = 103;
+// Blocks render at 78% of the source art (102×103), so the question row and the
+// palette read as part of the scene rather than dominating it.
+export const BLOCK_W = 80;
+export const BLOCK_H = 81;
 
 // §6.1 Question row — ref: blocks interlock (the slot's side tabs sit in the
-// number blocks' notches), 92px step. PRD table said 230 / 349 / 468.
-export const LEFT_BLOCK: Rect = { x: 246, y: 13, w: BLOCK_W, h: BLOCK_H };
-export const ANSWER_SLOT: Rect = { x: 338, y: 13, w: BLOCK_W, h: BLOCK_H };
-export const RIGHT_BLOCK: Rect = { x: 430, y: 13, w: BLOCK_W, h: BLOCK_H };
-export const QUESTION_FONT = 44;
-export const QUESTION_FONT_3DIGIT = 36;
+// number blocks' notches); the 92px step scales down with them. Centred on x = 389.
+const QUESTION_STEP = 72;
+const SLOT_X = 349;
+export const LEFT_BLOCK: Rect = { x: SLOT_X - QUESTION_STEP, y: 14, w: BLOCK_W, h: BLOCK_H };
+export const ANSWER_SLOT: Rect = { x: SLOT_X, y: 14, w: BLOCK_W, h: BLOCK_H };
+export const RIGHT_BLOCK: Rect = { x: SLOT_X + QUESTION_STEP, y: 14, w: BLOCK_W, h: BLOCK_H };
+export const QUESTION_FONT = 34;
+export const QUESTION_FONT_3DIGIT = 28;
 export const DROP_TOLERANCE = 20;
 
-// §6.2 Answer panel — ref: 113px step (PRD's 90px step would overlap 103px blocks).
+// §6.2 Answer panel — the three blocks are centred both ways on the panel, leaving
+// (348 − 3×81 − 2×8) / 2 = 44px of breathing room above and below.
 export const UI_PANEL: Rect = { x: 0, y: 152, w: 118, h: 348 };
-export const PALETTE_X = 8;
-export const PALETTE_Y = { '<': 168, '=': 281, '>': 394 } as const;
+export const PALETTE_X = (118 - BLOCK_W) / 2;
+export const PALETTE_GAP = 8;
+const PALETTE_TOP = UI_PANEL.y + (UI_PANEL.h - (3 * BLOCK_H + 2 * PALETTE_GAP)) / 2;
+const PALETTE_STEP = BLOCK_H + PALETTE_GAP;
+export const PALETTE_Y = {
+  '<': PALETTE_TOP,
+  '=': PALETTE_TOP + PALETTE_STEP,
+  '>': PALETTE_TOP + 2 * PALETTE_STEP,
+} as const;
 export const PALETTE_ORDER = ['<', '=', '>'] as const;
-export const SYMBOL_FONT = 52;
+export const SYMBOL_FONT = 40;
 
 // §6.3 Timer
 export const TIMER_RECT: Rect = { x: 8, y: 10, w: 102, h: 56 };
 export const TIMER_WARNING_MS = 10_000;
 
-// §6.4 Score panel — ref: cards are 52px apart (a 60px step pushes slot 7 off-stage).
+// §6.4 Score panel — cards stack upward from the foot of the panel, the way floors
+// stack on the tower: oldest visible card at the bottom, newest on top.
 export const SCORE_PANEL: Rect = { x: 727, y: 0, w: 73, h: 600 };
 export const SCORE_HEADER: Rect = { x: 727, y: 10, w: 73, h: 90 };
 export const CARD_X = 738;
-export const CARD_Y0 = 185;
+/** Top edge of the bottom-most card slot. */
+export const CARD_BOTTOM_Y = 538;
 export const CARD_STEP = 52;
 export const CARD_SIZE = 52;
 export const VISIBLE_CARDS = 8;
@@ -115,5 +129,11 @@ export const BEST_SCORE_KEY = 'highTower.bestScore';
 
 export const CREDIT_LINE = 'TODO: Vidhu to supply final credit text';
 
+// Sampled from the art so the DOM-drawn panels and buttons match the PNGs.
 export const NAVY = '#1a237e';
 export const YELLOW = '#ffd600';
+/** `UI Panel.png` / `Score panel.png` fill. */
+export const PANEL_NAVY_RGB = '0, 15, 125';
+/** `User_Input Button_Main.png` face and its darker top band. */
+export const BUTTON_YELLOW = '#ffdf00';
+export const BUTTON_AMBER = '#f0b100';

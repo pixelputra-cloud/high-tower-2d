@@ -37,7 +37,7 @@ export function ResultsOverlay(p: Props) {
         transition={{ type: 'spring', duration: 0.4, bounce: 0.35 }}
         style={{
           ...rectStyle(RESULTS_RECT),
-          padding: '14px 24px 18px',
+          padding: '18px 28px 20px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -53,14 +53,14 @@ export function ResultsOverlay(p: Props) {
               transition={{ type: 'spring', delay: 0.35, bounce: 0.6 }}
               style={{
                 position: 'absolute',
-                right: 6,
+                right: 0,
                 top: 14,
                 background: '#ff1744',
                 color: '#fff',
-                border: '3px solid #000',
-                borderRadius: 10,
-                padding: '4px 8px',
+                borderRadius: 12,
+                padding: '5px 10px',
                 fontSize: 16,
+                boxShadow: '0 4px 0 rgba(120, 0, 25, 0.5)',
               }}
             >
               NEW BEST!

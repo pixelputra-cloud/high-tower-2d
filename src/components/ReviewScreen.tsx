@@ -21,7 +21,7 @@ export function ReviewScreen({ attempts, onBack }: { attempts: Attempt[]; onBack
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25 }}
-        style={{ ...rectStyle(P), boxShadow: '0 10px 0 rgba(0,0,0,0.35)' }}
+        style={rectStyle(P)}
       />
       {/* Header */}
       <div

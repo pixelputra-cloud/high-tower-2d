@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ASSETS } from '../game/assets';
 import {
+  CARD_BOTTOM_Y,
   CARD_SIZE,
   CARD_SLIDE_MS,
   CARD_STEP,
   CARD_X,
-  CARD_Y0,
   SCORE_HEADER,
   SCORE_PANEL,
   VISIBLE_CARDS,
@@ -13,7 +13,8 @@ import {
 import { rectStyle } from '../game/layout';
 import type { Attempt } from '../game/types';
 
-const slotY = (i: number) => CARD_Y0 + i * CARD_STEP;
+/** Slot 0 is the bottom of the panel; later attempts stack upward from there. */
+const slotY = (i: number) => CARD_BOTTOM_Y - i * CARD_STEP;
 const slide = { duration: CARD_SLIDE_MS / 1000, ease: 'easeOut' } as const;
 
 export function ScorePanel({ points, attempts }: { points: number; attempts: Attempt[] }) {
@@ -43,7 +44,8 @@ export function ScorePanel({ points, attempts }: { points: number; attempts: Att
         </motion.div>
         <div className="hud-text" style={{ fontSize: 18 }}>Points</div>
       </div>
-      {/* Last 8 attempts; from the 9th on, everything slides up one slot and the oldest fades out. */}
+      {/* Last 8 attempts; from the 9th on, everything slides down one slot and the oldest
+          fades out past the foot of the panel. */}
       <AnimatePresence initial={false}>
         {visible.map((a, i) => (
           <motion.img
