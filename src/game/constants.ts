@@ -131,10 +131,17 @@ export const PARALLAX_HALF_AT = 4;
 export const PARALLAX_MS = 680;
 
 // §6.5 Tower — ref: column centred on x≈388 like the question row (PRD said 254).
-export const TOWER_X = 242;
-export const TOWER_W = 292;
-export const FLOOR_H = 119;
-export const TOP_FLOOR_H = 101;
+//
+// The art renders at 75% of source (292×119 stacks, 292×101 roof). At full size the
+// tower reached the camera lock after only 4 answers, leaving 3.3 floors on screen;
+// at 75% it takes 5 and shows 4.7, so the climb builds up more gradually. Heights are
+// rounded to whole pixels so stacked floors butt together without seams.
+export const TOWER_SCALE = 0.75;
+export const TOWER_W = 219;
+export const FLOOR_H = 89;
+export const TOP_FLOOR_H = 76;
+/** Centred on the question row's own centre line (x = 389). */
+export const TOWER_X = 279;
 export const GROUND_Y = 600;
 /**
  * Where the roof's top edge parks once the camera locks. The PRD said 60, but the
@@ -145,10 +152,15 @@ export const GROUND_Y = 600;
 export const TOWER_HEADROOM = 8;
 export const CAMERA_LOCK_Y = ANSWER_SLOT.y + ANSWER_SLOT.h + TOWER_HEADROOM;
 
-// Floor label mini-blocks, offsets from the stack's top-left — ref measurements.
-export const MINI_LEFT: Rect = { x: 37, y: 42, w: 73, h: 66 };
-export const MINI_SYMBOL: Rect = { x: 119, y: 48, w: 55, h: 53 };
-export const MINI_RIGHT: Rect = { x: 183, y: 42, w: 73, h: 66 };
+// Floor label mini-blocks, offsets from the stack's top-left — ref measurements at
+// TOWER_SCALE, so they stay in register with the stack art.
+export const MINI_LEFT: Rect = { x: 28, y: 32, w: 55, h: 50 };
+export const MINI_SYMBOL: Rect = { x: 89, y: 36, w: 41, h: 40 };
+export const MINI_RIGHT: Rect = { x: 137, y: 32, w: 55, h: 50 };
+/** Label text, also at TOWER_SCALE (was 36 / 28 / 32). */
+export const MINI_NUMBER_FONT = 27;
+export const MINI_NUMBER_FONT_3DIGIT = 21;
+export const MINI_SYMBOL_FONT = 24;
 
 // §7 Timings (ms)
 export const SESSION_MS = 90_000;

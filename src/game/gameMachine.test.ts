@@ -58,7 +58,8 @@ describe('tower', () => {
   it('starts with only the roof resting on the ground', () => {
     const s = start();
     expect(s.floors).toHaveLength(0);
-    expect(towerTopY(0)).toBe(499);
+    // The roof's bottom edge sits exactly on the ground line.
+    expect(towerTopY(0)).toBe(GROUND_Y - TOP_FLOOR_H);
   });
 
   it('A8: correct answers add floors on top with alternating art and their own labels', () => {
@@ -89,10 +90,19 @@ describe('tower', () => {
   });
 
   it('A12: camera locks once the roof would rise past the question row', () => {
-    expect(cameraOffsetFor(3)).toBe(0); // top at 142, still below the lock line
-    expect(towerTopY(4)).toBe(23);
-    expect(cameraOffsetFor(4)).toBe(CAMERA_LOCK_Y - 23);
+    // Derived from the constants rather than hard-coded, so rescaling the tower art
+    // changes which floor locks the camera without silently breaking this test.
+    const firstLocked = [...Array(20).keys()].find((n) => cameraOffsetFor(n) > 0)!;
+    expect(towerTopY(firstLocked - 1)).toBeGreaterThanOrEqual(CAMERA_LOCK_Y);
+    expect(cameraOffsetFor(firstLocked - 1)).toBe(0);
+    expect(towerTopY(firstLocked)).toBeLessThan(CAMERA_LOCK_Y);
+    expect(cameraOffsetFor(firstLocked)).toBe(CAMERA_LOCK_Y - towerTopY(firstLocked));
+    // Past the lock each floor shifts the camera by exactly one floor height.
     expect(cameraOffsetFor(10) - cameraOffsetFor(9)).toBe(FLOOR_H);
+  });
+
+  it('the tower builds up gradually: the camera holds for at least 4 answers', () => {
+    expect(cameraOffsetFor(4)).toBe(0);
   });
 
   it('the parked roof clears the question blocks, so it is never hidden behind them', () => {

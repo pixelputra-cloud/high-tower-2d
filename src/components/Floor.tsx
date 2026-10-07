@@ -7,8 +7,11 @@ import {
   FLOOR_Z_BASE,
   LABEL_FADE_MS,
   MINI_LEFT,
+  MINI_NUMBER_FONT,
+  MINI_NUMBER_FONT_3DIGIT,
   MINI_RIGHT,
   MINI_SYMBOL,
+  MINI_SYMBOL_FONT,
   TOWER_W,
 } from '../game/constants';
 import { formatNumber } from '../game/questionGenerator';
@@ -22,7 +25,7 @@ interface Props {
   transition: Transition;
 }
 
-const numberFont = (n: number) => (n >= 100 ? 28 : 36);
+const numberFont = (n: number) => (n >= 100 ? MINI_NUMBER_FONT_3DIGIT : MINI_NUMBER_FONT);
 
 /** One stack plus the question it was earned with. */
 export function Floor({ floor, index, y, transition }: Props) {
@@ -55,7 +58,7 @@ export function Floor({ floor, index, y, transition }: Props) {
         <MiniBlock kind="number" rect={MINI_LEFT} fontSize={numberFont(floor.left)}>
           {formatNumber(floor.left)}
         </MiniBlock>
-        <MiniBlock kind="symbol" rect={MINI_SYMBOL} fontSize={32}>
+        <MiniBlock kind="symbol" rect={MINI_SYMBOL} fontSize={MINI_SYMBOL_FONT}>
           {floor.symbol}
         </MiniBlock>
         <MiniBlock kind="number" rect={MINI_RIGHT} fontSize={numberFont(floor.right)}>
