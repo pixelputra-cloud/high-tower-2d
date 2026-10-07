@@ -1,13 +1,19 @@
 import { motion } from 'framer-motion';
 import { ASSETS } from '../game/assets';
-import { CREDIT_LINE, START_BUTTON_RECT, STAGE_W, TITLE_RECT } from '../game/constants';
+import { CREDIT_LINE, STAGE_H, STAGE_W, START_BUTTON_RECT, TITLE_RECT } from '../game/constants';
 import { rectStyle } from '../game/layout';
 
 export function SplashScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="layer">
-      {/* BG is 800×605: anchor to the top, the stage clips the extra 5px. */}
-      <img src={ASSETS.splashBg} alt="" draggable={false} style={{ position: 'absolute', left: 0, top: 0, width: STAGE_W }} />
+      {/* Pinned to the stage rather than sized by the file, so swapping the art in at a
+          slightly different height can't leave a gap or overhang at the bottom. */}
+      <img
+        src={ASSETS.splashBg}
+        alt=""
+        draggable={false}
+        style={{ position: 'absolute', left: 0, top: 0, width: STAGE_W, height: STAGE_H }}
+      />
       <img src={ASSETS.title} alt="High Tower" draggable={false} style={rectStyle(TITLE_RECT)} />
       <motion.button
         aria-label="Start Game"
