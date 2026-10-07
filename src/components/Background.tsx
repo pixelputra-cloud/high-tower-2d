@@ -6,6 +6,8 @@ import {
   CLOUD_BAND,
   CLOUD_COUNT,
   CLOUD_DEPTH,
+  CLOUD_SCALE_MAX,
+  CLOUD_SCALE_MIN,
   PARALLAX_HALF_AT,
   PARALLAX_MAX_SHIFT,
   PARALLAX_MS,
@@ -39,7 +41,7 @@ function scatterClouds(): Cloud[] {
   const band = CLOUD_BAND.bottom - CLOUD_BAND.top;
   return Array.from({ length: CLOUD_COUNT }, (_, i) => {
     const useFirst = i % 2 === 0;
-    const scale = 0.75 + Math.random() * 0.75;
+    const scale = CLOUD_SCALE_MIN + Math.random() * (CLOUD_SCALE_MAX - CLOUD_SCALE_MIN);
     const w = (useFirst ? 131 : 163) * scale;
     const h = (useFirst ? 85 : 89) * scale;
     return {

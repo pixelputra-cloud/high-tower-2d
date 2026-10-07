@@ -96,16 +96,19 @@ export const BG_LAYERS: BgLayer[] = [
   // The sky is infinitely distant, so it is pinned: anything else would open a gap
   // at the top of the stage, since it is exactly stage-sized.
   { src: 'bgPlain', x: 0, y: 0, w: 800, h: 601, depth: 0 },
-  { src: 'bgBush', x: 0, y: 420, w: 800, h: 193, depth: 0.25 },
-  { src: 'bgBuilding', x: 101, y: 252, w: 597, h: 582, depth: 0.45 },
+  { src: 'bgBush', x: 0, y: 420, w: 800, h: 193, depth: 0.45 },
+  { src: 'bgBuilding', x: 101, y: 252, w: 597, h: 582, depth: 0.6 },
   // clouds sit here, between the background and middle-ground buildings
-  { src: 'mgBuilding', x: 37, y: 300, w: 725, h: 394, depth: 0.74 },
+  { src: 'mgBuilding', x: 37, y: 300, w: 725, h: 394, depth: 0.86 },
   { src: 'fgBuilding', x: 99, y: 466, w: 601, h: 178, depth: 1 },
 ];
 
 /** Clouds drift between the background and middle-ground buildings. */
-export const CLOUD_DEPTH = 0.58;
+export const CLOUD_DEPTH = 0.72;
 export const CLOUD_COUNT = 6;
+/** Random size range for each cloud, as a fraction of the source art. */
+export const CLOUD_SCALE_MIN = 0.56;
+export const CLOUD_SCALE_MAX = 1.13;
 /**
  * Vertical band the clouds scatter within. It reaches a little past the background
  * buildings' peaks (y 252) on purpose, so some clouds pass in front of those and
@@ -114,13 +117,16 @@ export const CLOUD_COUNT = 6;
 export const CLOUD_BAND = { top: 30, bottom: 292 };
 
 /** Downward travel of the nearest layer once the parallax has fully saturated. */
-export const PARALLAX_MAX_SHIFT = 30;
+export const PARALLAX_MAX_SHIFT = 70;
 /**
  * Floors at which the drift reaches half of PARALLAX_MAX_SHIFT. The curve saturates
- * rather than scaling linearly, so the background keeps responding at any tower
- * height without ever sliding far enough to expose a layer's edge.
+ * rather than scaling linearly, so total travel stays bounded and no layer edge can
+ * ever be exposed. Keeping this low front-loads the movement into the early floors,
+ * where the player is watching the tower grow: the first answer shifts the nearest
+ * layer 14px and the background buildings 8px, which reads clearly, and the drift
+ * then tapers off as the tower gets tall.
  */
-export const PARALLAX_HALF_AT = 5;
+export const PARALLAX_HALF_AT = 4;
 /** The background settles a little after the tower, which reads as distance. */
 export const PARALLAX_MS = 680;
 
