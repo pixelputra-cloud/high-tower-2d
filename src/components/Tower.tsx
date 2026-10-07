@@ -37,8 +37,11 @@ const SETTLE: Transition = { delay: EXPLODE_MS / 1000, duration: SETTLE_MS / 100
 export function Tower({ floors, cameraOffsetY, resolution }: Props) {
   const wrong = resolution?.kind === 'wrong';
   const move = wrong ? SETTLE : RISE;
+  // `isolation` keeps the floor/roof z-scale inside the tower. Without it, a camera
+  // offset of 0 leaves the group with no transform, hence no stacking context, and the
+  // roof's z-index escapes to cover the streak banner.
   return (
-    <div className="layer" style={{ overflow: 'hidden', pointerEvents: 'none' }}>
+    <div className="layer" style={{ overflow: 'hidden', pointerEvents: 'none', isolation: 'isolate' }}>
       <motion.div
         initial={false}
         animate={{ y: cameraOffsetY }}

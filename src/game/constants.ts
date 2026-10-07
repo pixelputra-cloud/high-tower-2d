@@ -108,7 +108,12 @@ export const SLOT_FLASH_MS = 150;
 export const FLOOR_RISE_MS = 520;
 /** Small overshoot so the rise settles with some weight instead of stopping dead. */
 export const FLOOR_RISE_BOUNCE = 0.18;
-/** Floors paint lowest-on-top, so a rising floor stays hidden until it clears the one below. */
+/**
+ * Floors paint lowest-on-top, so a rising floor stays hidden until it clears the one
+ * below. These live on their own scale and must never compete with the stage layers
+ * below — the tower group sets `isolation: isolate` so they stay contained even when
+ * the camera offset is 0 and Framer Motion emits no transform of its own.
+ */
 export const FLOOR_Z_BASE = 500;
 export const ROOF_Z = FLOOR_Z_BASE + 100;
 export const LABEL_FADE_MS = 200;
@@ -122,6 +127,12 @@ export const POINTS_PER_FLOOR = 5;
 // §7.8 Streak banner
 export const STREAK_EVERY = 3;
 export const BANNER_Y = 128;
+/**
+ * Paint order within the stage. The banner clears everything in the playfield —
+ * tower, question row, panels — but deliberately stays under the results and review
+ * modals, so a banner still on screen when the timer expires cannot cover them.
+ */
+export const BANNER_Z = 45;
 export const BANNER_DELAY_MS = 400;
 export const BANNER_ENTER_MS = 300;
 export const BANNER_HOLD_MS = 900;

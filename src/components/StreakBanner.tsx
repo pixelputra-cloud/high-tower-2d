@@ -6,8 +6,8 @@ import {
   BANNER_EXIT_MS,
   BANNER_HOLD_MS,
   BANNER_Y,
+  BANNER_Z,
   STAGE_W,
-  YELLOW,
 } from '../game/constants';
 
 interface Props {
@@ -45,7 +45,7 @@ export function StreakBanner({ message, id }: Props) {
         display: 'flex',
         justifyContent: 'center',
         pointerEvents: 'none',
-        zIndex: 40,
+        zIndex: BANNER_Z,
       }}
     >
       <AnimatePresence mode="wait">
@@ -60,19 +60,7 @@ export function StreakBanner({ message, id }: Props) {
               transition: { type: 'spring', duration: BANNER_ENTER_MS / 1000, bounce: 0.5 },
             }}
             exit={{ y: -30, opacity: 0, transition: { duration: BANNER_EXIT_MS / 1000, ease: 'easeIn' } }}
-            style={{
-              height: 56,
-              padding: '0 20px',
-              display: 'flex',
-              alignItems: 'center',
-              background: YELLOW,
-              border: '3px solid #000',
-              borderRadius: 14,
-              fontSize: 28,
-              fontWeight: 700,
-              whiteSpace: 'nowrap',
-              boxShadow: '0 5px 0 rgba(0,0,0,0.3)',
-            }}
+            className="streak-banner"
           >
             {shown.message}
           </motion.div>
