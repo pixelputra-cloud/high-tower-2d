@@ -156,7 +156,8 @@ export const START_BUTTON_RECT: Rect = { x: 327, y: 501, w: 156, h: 50 };
 
 export const BEST_SCORE_KEY = 'highTower.bestScore';
 
-export const CREDIT_LINE = 'TODO: Vidhu to supply final credit text';
+export const CREDIT_LINE =
+  'Number comparison game based on research by Dr. Kaye Stacey and others, University of Melbourne';
 
 // Sampled from the art so the DOM-drawn panels and buttons match the PNGs.
 export const NAVY = '#1a237e';
