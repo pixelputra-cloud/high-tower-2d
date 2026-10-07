@@ -1,13 +1,11 @@
 import { motion, useAnimationControls } from 'framer-motion';
 import { useCallback, useEffect, type Dispatch, type RefObject } from 'react';
-import { ASSETS } from '../game/assets';
 import {
   ANSWER_SLOT,
   CORRECT_RESOLVE_MS,
   DROP_TOLERANCE,
   EXPLODE_MS,
   SETTLE_MS,
-  STAGE_W,
   WRONG_RESOLVE_MS,
 } from '../game/constants';
 import { points, type GameAction } from '../game/gameMachine';
@@ -16,6 +14,7 @@ import type { GameState, Symbol } from '../game/types';
 import { useCountdown } from '../hooks/useCountdown';
 import { usePointerDrag } from '../hooks/usePointerDrag';
 import { AnswerPanel } from './AnswerPanel';
+import { Background } from './Background';
 import { Debris } from './Debris';
 import { DragLayer } from './DragLayer';
 import { QuestionRow } from './QuestionRow';
@@ -77,12 +76,7 @@ export function GameScreen({ state, dispatch, stageRef }: Props) {
 
   return (
     <div className={`layer${drag ? ' dragging-cursor' : ''}`}>
-      <img
-        src={ASSETS.gameBg}
-        alt=""
-        draggable={false}
-        style={{ position: 'absolute', left: 0, top: 0, width: STAGE_W }}
-      />
+      <Background floorCount={state.floors.length} />
       <motion.div className="layer" animate={shake}>
         <Tower floors={state.floors} cameraOffsetY={state.cameraOffsetY} resolution={resolution} />
         {resolution?.kind === 'wrong' && resolution.destroyedFloorScreenY !== null && (

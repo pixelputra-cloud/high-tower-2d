@@ -72,6 +72,58 @@ export const CARD_SIZE = 52;
 export const VISIBLE_CARDS = 8;
 export const CARD_SLIDE_MS = 250;
 
+// Parallax background ------------------------------------------------------
+//
+// The static BG.png is replaced by seven layers that drift at different rates as
+// the tower grows, so the scene gains depth. Every ground-anchored layer is
+// positioned so its bottom edge sits below the stage: the art is meant to run off
+// the bottom of the screen, and layers only ever drift DOWNWARD, so a flat bottom
+// edge can never scroll into view.
+
+export interface BgLayer {
+  /** Key into ASSETS. */
+  src: 'bgPlain' | 'bgBush' | 'bgBuilding' | 'mgBuilding' | 'fgBuilding';
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  /** 0 = infinitely distant and never moves, 1 = nearest and moves the most. */
+  depth: number;
+}
+
+/** Back to front. The tower and all UI render above every one of these. */
+export const BG_LAYERS: BgLayer[] = [
+  // The sky is infinitely distant, so it is pinned: anything else would open a gap
+  // at the top of the stage, since it is exactly stage-sized.
+  { src: 'bgPlain', x: 0, y: 0, w: 800, h: 601, depth: 0 },
+  { src: 'bgBush', x: 0, y: 420, w: 800, h: 193, depth: 0.25 },
+  { src: 'bgBuilding', x: 101, y: 252, w: 597, h: 582, depth: 0.45 },
+  // clouds sit here, between the background and middle-ground buildings
+  { src: 'mgBuilding', x: 37, y: 300, w: 725, h: 394, depth: 0.74 },
+  { src: 'fgBuilding', x: 99, y: 466, w: 601, h: 178, depth: 1 },
+];
+
+/** Clouds drift between the background and middle-ground buildings. */
+export const CLOUD_DEPTH = 0.58;
+export const CLOUD_COUNT = 6;
+/**
+ * Vertical band the clouds scatter within. It reaches a little past the background
+ * buildings' peaks (y 252) on purpose, so some clouds pass in front of those and
+ * behind the middle-ground ones, which is what makes the layering read as depth.
+ */
+export const CLOUD_BAND = { top: 30, bottom: 292 };
+
+/** Downward travel of the nearest layer once the parallax has fully saturated. */
+export const PARALLAX_MAX_SHIFT = 30;
+/**
+ * Floors at which the drift reaches half of PARALLAX_MAX_SHIFT. The curve saturates
+ * rather than scaling linearly, so the background keeps responding at any tower
+ * height without ever sliding far enough to expose a layer's edge.
+ */
+export const PARALLAX_HALF_AT = 5;
+/** The background settles a little after the tower, which reads as distance. */
+export const PARALLAX_MS = 680;
+
 // §6.5 Tower — ref: column centred on x≈388 like the question row (PRD said 254).
 export const TOWER_X = 242;
 export const TOWER_W = 292;
