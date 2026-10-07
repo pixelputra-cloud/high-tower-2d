@@ -98,8 +98,19 @@ export const TICK_MS = 100;
 export const CORRECT_RESOLVE_MS = 600;
 export const WRONG_RESOLVE_MS = 700;
 export const SLOT_FLASH_MS = 150;
-export const FLOOR_DROP_MS = 400;
-export const FLOOR_DROP_FROM = 60;
+/**
+ * A new floor does not drop in from above — it rises out of the tower. It starts a
+ * full FLOOR_H below its slot, exactly covered by the floor beneath it, then pushes
+ * up into place while the roof and camera travel the same distance on the same curve,
+ * so the structure reads as one body extruding upward rather than a part appearing.
+ * The first floor starts at the ground line, so the tower grows out of the ground.
+ */
+export const FLOOR_RISE_MS = 520;
+/** Small overshoot so the rise settles with some weight instead of stopping dead. */
+export const FLOOR_RISE_BOUNCE = 0.18;
+/** Floors paint lowest-on-top, so a rising floor stays hidden until it clears the one below. */
+export const FLOOR_Z_BASE = 500;
+export const ROOF_Z = FLOOR_Z_BASE + 100;
 export const LABEL_FADE_MS = 200;
 export const EXPLODE_MS = 300;
 export const SETTLE_MS = 350;
