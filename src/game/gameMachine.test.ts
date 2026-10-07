@@ -143,6 +143,6 @@ describe('session', () => {
     expect(gameReducer(review, { type: 'HIDE_REVIEW' })).toEqual(s);
     const again = gameReducer(s, { type: 'START_GAME', seed: 5 });
     expect(again).toMatchObject({ phase: 'playing', floors: [], attempts: [], questionIndex: 1, timeRemaining: 90_000, bestScore: 5 });
-    expect(gameReducer(s, { type: 'GO_MENU' }).phase).toBe('splash');
+    expect(gameReducer(s, { type: 'GO_HOME' }).phase).toBe('splash');
   });
 });

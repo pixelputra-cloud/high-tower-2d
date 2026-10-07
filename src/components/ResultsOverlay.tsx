@@ -12,7 +12,7 @@ interface Props {
   isNewBest: boolean;
   onReview: () => void;
   onPlayAgain: () => void;
-  onMenu: () => void;
+  onHome: () => void;
 }
 
 function Stat({ label, children }: { label: string; children: ReactNode }) {
@@ -83,8 +83,8 @@ export function ResultsOverlay(p: Props) {
           <button className="btn" onClick={p.onPlayAgain}>
             Play Again
           </button>
-          <button className="btn btn--alt" onClick={p.onMenu}>
-            Menu
+          <button className="btn btn--alt" onClick={p.onHome}>
+            Home
           </button>
         </div>
       </motion.div>

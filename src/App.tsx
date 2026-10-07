@@ -58,7 +58,7 @@ export default function App() {
               isNewBest={state.isNewBest}
               onReview={() => dispatch({ type: 'SHOW_REVIEW' })}
               onPlayAgain={start}
-              onMenu={() => dispatch({ type: 'GO_MENU' })}
+              onHome={() => dispatch({ type: 'GO_HOME' })}
             />
           )}
           {state.phase === 'review' && (

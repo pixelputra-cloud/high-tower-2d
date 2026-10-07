@@ -21,7 +21,7 @@ export type GameAction =
   | { type: 'NEXT_QUESTION' }
   | { type: 'SHOW_REVIEW' }
   | { type: 'HIDE_REVIEW' }
-  | { type: 'GO_MENU' };
+  | { type: 'GO_HOME' };
 
 export const points = (state: Pick<GameState, 'floors'>) => state.floors.length * POINTS_PER_FLOOR;
 
@@ -187,7 +187,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       return state.phase === 'results' ? { ...state, phase: 'review' } : state;
     case 'HIDE_REVIEW':
       return state.phase === 'review' ? { ...state, phase: 'results' } : state;
-    case 'GO_MENU':
+    case 'GO_HOME':
       return { ...createInitialState(state.bestScore, state.seed), session: state.session };
   }
 }
